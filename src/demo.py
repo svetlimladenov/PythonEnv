@@ -1,13 +1,33 @@
 import wx;
 
-app = wx.App(clearSigInt=True)
+class MyApp(wx.App):
+    def __init__(self):
+        super().__init__(clearSigInt=True)
 
-frame = wx.Frame(parent=None, id=wx.ID_ANY, title="My First App", pos= (100, 100))
+        # init frame
+        self.InitFrame()
 
-panel = wx.Panel(parent=frame, id=wx.ID_ANY)
+    def InitFrame(self):
+        frame = MyFrame(parent=None, title="My Frame", pos= (100, 100))
+        frame.Show()
 
-welcomeText = wx.StaticText(parent=panel, label="Hello World!!!", pos = (20, 20))
+class MyFrame(wx.Frame):
+    def __init__(self, parent, title, pos):
+        super().__init__(parent=parent, title=title, pos=pos)
+        self.OnInit()
+    
+    def OnInit(self):
+        panel = MyPanel(parent=self)
 
-frame.Show()
+class MyPanel(wx.Panel):
+    def __init__(self, parent):
+        super().__init__(parent=parent)
 
-app.MainLoop()
+        # add a hello message to the panel
+        welcomeText = wx.StaticText(self, id=wx.ID_ANY, label="Hello World!!!", pos = (20, 20))
+        # ID_ANY mean thath we don't care about the id
+
+
+if __name__ == "__main__":
+    app = MyApp()
+    app.MainLoop()
